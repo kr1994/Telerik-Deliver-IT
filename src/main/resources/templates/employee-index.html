@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Employee options</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="../static/styles.css" th:href="@{/styles.css}" rel="stylesheet"/>
+    <link href="../static/styles.css" th:href="@{/styles.css}" rel="stylesheet"/>
+    <link href="../static/table-styles.css" th:href="@{/table-styles.css}" rel="stylesheet"/>
+<body>
+<div th:insert="index :: navigation-main"></div>
+
+<br/>
+<br/>
+<div>
+    <form action="#" th:action="@{__${#httpServletRequest.requestURI}__}"
+          th:object="${idDto}" method="post">
+        <!--option-->
+        <h3><label th:text="#{employees.options}"> Employee options </label></h3>
+
+        <br/>
+        <label>
+            <select th:field="*{option}">
+                <option th:each="pick : ${idDto.options}"
+                        th:value="${pick}"
+                        th:text="${pick}">
+                    by Id
+                </option>
+            </select>
+        </label>
+        <br/>
+        <br/>
+        <!-- id -->
+        <label th:text="#{label.id}"> ID </label>
+        <br/>
+        <label>
+            <input type="number" th:min="1" th:field="*{id}" required/>
+            <label class="error" th:errors="*{id}"></label>
+        </label>
+        <br/>
+        <br/>
+        <input type="submit" value="Go">
+    </form>
+</div>
+<br/>
+
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{login.title}">Login</title>
+    <link href="../static/styles.css" th:href="@{/styles.css}" rel="stylesheet"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="../static/styles.css" th:href="@{/styles.css}" rel="stylesheet"/>
+    <link href="../static/input-fields.css" th:href="@{/input-fields.css}" rel="stylesheet"/>
+</head>
+<body>
+<div th:insert="index :: navigation-main"> </div>
+
+<ul>
+    <li><h3><a href="/" th:text="#{navigation.home}">Home</a></h3></li>
+</ul>
+<div>
+    <h3>
+        <span th:text="#{login.header}">Personal Information about the new customer:</span>
+    </h3>
+
+    <form action="#" th:action="@{__${#httpServletRequest.requestURI}__}"
+          th:fragment="login-form"
+          th:object="${credentials}" method="post">
+        <!-- ID -->
+        <div>
+            <label>
+                <input type="text" class="form-control" placeholder="ID" th:field="*{id}" required/>
+                <label class="error" th:errors="*{id}"></label>
+            </label>
+        </div>
+        <br/>
+        <!--First Name-->
+        <div>
+            <label>
+                <input type="text" class="form-control" placeholder="First Name" th:field="*{name}" required/>
+                <label class="error" th:errors="*{name}"></label>
+            </label>
+        </div>
+        <br/>
+        <!--Pass Employee only-->
+        <div>
+            <label>
+                <input type="password" class="form-control" placeholder="Password" th:field="*{password}"/>
+            </label>
+        </div>
+        <br/>
+
+        <button type="submit" class="dropbtn" value="Save">Save</button>
+
+    </form>
+</div>
+</body>
+</html>

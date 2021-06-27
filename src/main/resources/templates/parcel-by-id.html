@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{parcel.title} +' '+ ${parcel.getId()}">Parcel Id</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="../static/styles.css" th:href="@{/styles.css}" rel="stylesheet"/>
+    <link href="../static/styles.css" th:href="@{/styles.css}" rel="stylesheet"/>
+    <link href="../static/table-styles.css" th:href="@{/table-styles.css}" rel="stylesheet"/>
+
+</head>
+<body>
+<div th:insert="index :: navigation-main"></div>
+
+<ul th:if="${session.role} != null">
+    <li><h3><a href="/" th:text="#{navigation.home}">Home</a></h3></li>
+
+    <li><h3><a href="#" th:href="@{/parcels/sorted}"
+               th:text="#{parcel-sorting.title}">Parcel Sorting</a></h3></li>
+
+    <li th:if="${session.role} == #{role.employee}">
+        <h3><a href="#" th:href="@{/parcels/{id}/update (id = ${parcel.getId()}) }"
+               th:text="#{parcel-update.title}">Parcel Update</a>
+        </h3>
+    </li>
+</ul>
+<div>
+    <h3>
+        <span class=entityField> Parcel id: </span>
+        <span th:text="${parcel.getId}">8</span>
+    </h3>
+
+    <div th:fragment="parcel-view"
+         th:action="@{__${#httpServletRequest.requestURI}__}">
+        <table class="styled-table">
+            <thead>
+            <tr>
+                <th class="entityField" th:text="#{parcel.label.customer}">Customer</th>
+                <th class="entityField" th:text="#{parcel.label.category}">Category</th>
+                <th class="entityField" th:text="#{parcel.label.weight}">Weight</th>
+                <th class="entityField" th:text="#{parcel.label.shipment.id}">Shipment Id</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <a href="#" th:href="@{/customers/{id} (id = ${parcel.getCustomer().getId()})} "
+                       th:text="${parcel.getCustomer().getLastName()}">Ivanov</a>
+                </td>
+
+                <td th:text="${parcel.getCategory().getParcelCategory()}">Food</td>
+                <td>
+                    <span th:text="${parcel.getWeight()}">3.45</span>
+                    <span th:text="${parcel.getWeightUnit().getUnits()}">gram</span>
+                </td>
+                <td>
+                    <a href="#" th:href="@{/shipments/{id} (id = ${parcel.shipmentId})} "
+                       th:if="${session.role} == #{role.employee}"
+                       th:text="${parcel.shipmentId}">8</a>
+
+                    <span th:unless="${session.role} == #{role.employee}"
+                          th:text="${parcel.shipmentId}">8</span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <br/>
+    <div th:if="${parcel.getCustomer().getLastName().equals(session.userLastName.toString()) &&
+                 parcel.getCustomer().getId() == session.credentials.getId()}">
+        <span>
+            <a href="#" th:href="@{/parcels/{id}/additionalInfo (id=${parcel.getId()})}"
+               th:text="#{parcel.additional.info}">Additional info</a>
+        </span>
+    </div>
+</div>
+<br/>
+<br/>
+<br/>
+
+<ul>
+    <li th:if="${session.role} == #{role.employee}">
+        <h5><a href="#" th:href="@{/parcels/{id}/delete (id = ${parcel.getId()}) }"
+               th:text="#{parcel-delete.title}"> Delete Parcel</a></h5>
+    </li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Shipments by Warehouse</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="../static/styles.css" th:href="@{/styles.css}" rel="stylesheet"/>
+    <link href="../static/styles.css" th:href="@{/styles.css}" rel="stylesheet"/>
+    <link href="../static/table-styles.css" th:href="@{/table-styles.css}" rel="stylesheet"/>
+
+</head>
+
+<body>
+<div th:insert="index :: navigation-main"> </div>
+
+<ul>
+    <li><h3><a href="/" th:text="#{navigation.home}">Home</a></h3></li>
+</ul>
+<ul>
+    <li><h3><a href="#" th:href="@{/warehouses}"
+               th:text="#{navigation.all-warehouses}">Warehouses</a></h3></li>
+</ul>
+
+<div th:if="${shipments.isEmpty()}">
+    <h3 th:text="#{shipments.title.empty}">No Shipments</h3>
+</div>
+
+<div th:unless="${shipments.isEmpty()}">
+    <h3>
+        <span th:text="#{shipments-to-warehouse-id} +' '"> Shipments to Warehouse id </span>
+        <a href="#"
+           th:href="@{/warehouses/{id}(id=${shipments.get(0).getDestination().getId()})}"
+           th:text="#{id(${shipments.get(0).getDestination().getId()})}"> 16
+        </a>
+    </h3>
+
+    <div>
+        <span class=entityField th:text="#{shipment.label.city}"> City </span>
+        <span class=entityField th:text="${shipments.get(0).getDestination().cityName}"> Sofia, </span>
+    </div>
+    <div>
+        <span class=entityField th:text="#{shipment.label.country}"> Country </span>
+        <span class=entityField th:text="${shipments.get(0).getDestination().countryName}"> Bulgaria </span>
+    </div>
+
+    <table class="styled-table">
+        <thead>
+        <tr>
+            <th th:text="#{shipment.label.id}">ID</th>
+            <th th:text="#{shipment.label.status}">Status</th>
+            <th th:text="#{shipment.label.departure.date}">Departure</th>
+            <th th:text="#{shipment.label.arrival.date}">Arrival</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="shipment : ${shipments}">
+            <td>
+                <a href="#"
+                   th:href="@{/shipments/{id}(id=${shipment.getId()})}"
+                   th:text="${shipment.getId()}">ID</a>
+            </td>
+            <td th:text="${shipment.getStatus().getStatus()}">Done</td>
+            <td th:text="${shipment.getDepartureDate()}">2020-02-20</td>
+            <td th:text="${shipment.getArrivalDate()}">2020-02-22</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

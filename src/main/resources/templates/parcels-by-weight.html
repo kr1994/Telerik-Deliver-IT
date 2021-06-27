@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{parcel-weight-filter.title}">Filter by Weight</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="../static/styles.css" th:href="@{/styles.css}" rel="stylesheet"/>
+    <link href="../static/styles.css" th:href="@{/styles.css}" rel="stylesheet"/>
+
+</head>
+<body>
+<div th:insert="index :: navigation-main"></div>
+
+<ul>
+    <li><h3><a href="/" th:text="#{navigation.home}">Home</a></h3></li>
+    <li><h3><a href="#" th:href="@{/parcels/filter/status}"
+               th:text="#{parcel-status-filter.title}"> Filter by Status</a></h3></li>
+</ul>
+<div>
+    <h3>
+        <span th:text="#{parcel-weight-filter.header}">Filter By Weight </span>
+    </h3>
+    <form action="#" th:action="@{__${#httpServletRequest.requestURI}__}"
+          th:fragment="weight-filter-form"
+          th:object="${filterByWeightDto}" method="post">
+
+        <!--Min Weight-->
+        <div>
+            <label th:text="#{parcel-weight-filter.label.min-weight}"> Min Weight</label>
+            <br/>
+            <label>
+                <input type="number" th:min="0" th:step="0.001"
+                       th:field="*{minWeight}"/>
+            </label>
+            <label>
+                <select th:field="*{minUnit}" required>
+                    <option th:each="unit : ${filterByWeightDto.getOptions()}"
+                            th:value="${unit}"
+                            th:text="${unit}">
+                        kg
+                    </option>
+                </select>
+                <label class="error" th:errors="*{minWeight}"></label>
+            </label>
+        </div>
+        <br/>
+        <!--Min Weight-->
+        <div>
+            <label th:text="#{parcel-weight-filter.label.max-weight}"> max Weight</label>
+            <br/>
+            <label>
+                <input type="number" th:min="0" th:step="0.001"
+                       th:field="*{maxWeight}"/>
+            </label>
+            <label>
+                <select th:field="*{maxUnit}" required>
+                    <option th:each="unit : ${filterByWeightDto.getOptions()}"
+                            th:value="${unit}" th:selected="${ unit.equals('kg')}"
+                            th:text="${unit}">
+                        kg
+                    </option>
+                </select>
+                <label class="error" th:errors="*{maxWeight}"></label>
+            </label>
+        </div>
+        <br/>
+        <input type="submit" value="Filter">
+    </form>
+</div>
+</body>
+</html>

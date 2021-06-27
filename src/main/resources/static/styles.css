@@ -1,0 +1,174 @@
+.table {
+    display: table;
+    margin: 10px;
+}
+
+.header {
+    display: table-header-group;
+    font-weight: bold;
+}
+
+.rowGroup {
+    display: table-row-group;
+}
+
+.row {
+    display: table-row;
+}
+
+.cell {
+    display: table-cell;
+    width: auto;
+    text-align: center;
+    border: black;
+    border: solid;
+    border-width: 1px ;
+    padding: 5px;
+}
+
+.error {
+    color: red;
+}
+
+body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
+
+body, html {
+    height: 100%;
+    line-height: 1.8;
+}
+
+/* Full height image header */
+.bgimg-1 {
+    background-position: center;
+    background-size: cover;
+    background-image: url("/images/trucks.jpg");
+    min-height: 100%;
+    z-index: 0;
+}
+
+.w3-bar {
+    height: 66px;
+}
+
+.w3-bar .w3-bar-item {
+    float: none;
+}
+
+.w3-bar .w3-button {
+    padding: 16px;
+}
+
+.w3-top {
+    z-index: 1;
+}
+
+.w3-display-left {
+    z-index: 0;
+}
+
+.link-button {
+    display: block;
+    text-align: center;
+    background-color: #1e1e1e;
+    color: white;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 14px;
+    padding: 10px;
+    margin: 10px;
+    height: 26px;
+    width: 115px;
+    border-radius: 10px;
+}
+
+.pos-button {
+    display: inline-block;
+}
+
+.link-button:hover {
+    background-color: #a2a2a2;
+}
+
+.welcome-button-container{
+    position: center;
+}
+
+.welcome-message-container {
+    text-align: center;
+    display: block;
+}
+
+.welcome-message {
+    font-size: 42px;
+    padding: 30px;
+}
+
+.customers-number {
+    font-size: 25px;
+}
+
+/* Dropdown Button */
+
+.dropbtn {
+    text-align: center;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    height: 66px;
+    width: 125px;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+    position: relative;
+    display: inline-block;
+    width: 125px;
+    height: 66px;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    width: 125px;
+    display: none;
+    position: fixed;
+    background-color: #f1f1f1;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+
+.dropdown-content:hover .dropbtn {
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+    z-index: 0;
+}
+
+.logged-user {
+    display: inline-block;
+    width: 125px;
+    height: 66px;
+    padding-left: 16px;
+    padding-right: 16px;
+    font-size: 16px;
+    position: static;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+    position: relative;
+    z-index: 2;
+}

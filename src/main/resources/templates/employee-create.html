@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{employee-create.title}">Create Employee</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="../static/styles.css" th:href="@{/styles.css}" rel="stylesheet"/>
+    <link href="../static/styles.css" th:href="@{/styles.css}" rel="stylesheet"/>
+
+</head>
+<body>
+<div th:insert="index :: navigation-main"> </div>
+
+<ul>
+    <li><h3><a href="/" th:text="#{navigation.home}">Home</a></h3></li>
+
+</ul>
+<div>
+    <h3>
+        <span th:text="#{employee-create.header}">Personal Information about the new employee:</span>
+    </h3>
+
+    <form action="#" th:action="@{__${#httpServletRequest.requestURI}__}"
+          th:fragment="employee-form"
+          th:object="${employeeDto}" method="post">
+        <!--First Name-->
+        <div>
+            <label th:text="#{user.label.firstName}"> First Name</label>
+            <br/>
+            <label>
+                <input type="text" th:field="*{firstName}" required/>
+                <label class="error" th:errors="*{firstName}"></label>
+            </label>
+        </div>
+        <br/>
+        <!--Last Name-->
+        <div>
+            <label th:text="#{user.label.lastName}"> Last Name</label>
+            <br/>
+            <label>
+                <input type="text" th:field="*{lastName}" required/>
+            </label>
+        </div>
+        <br/>
+        <!--email-->
+        <div>
+            <label th:text="#{user.label.email}"> Email</label>
+            <br/>
+            <label>
+                <input type="email" th:field="*{email}" required/>
+                <label class="error" th:errors="*{email}"></label>
+            </label>
+        </div>
+        <br/>
+        <!-- Password set -->
+        <div>
+            <label th:text="#{employee.label.password}"> Employee Password </label>
+            <br/>
+            <label>
+                <input type="password" th:field="*{password}" required/>
+                <label class="error" th:errors="*{password}"></label>
+            </label>
+        </div>
+        <br/>
+        <input type="submit" value="Save">
+    </form>
+</div>
+</body>
+</html>

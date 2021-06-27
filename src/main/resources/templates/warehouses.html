@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All Warehouses</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="../static/styles.css" th:href="@{/styles.css}" rel="stylesheet"/>
+    <link href="../static/styles.css" th:href="@{/styles.css}" rel="stylesheet"/>
+    <link href="../static/table-styles.css" th:href="@{/table-styles.css}" rel="stylesheet"/>
+</head>
+<body>
+<div th:insert="index :: navigation-main"></div>
+<ul>
+    <li><h3><a href="/" th:text="#{navigation.home}">Home</a></h3></li>
+</ul>
+<div th:if="${warehouses.isEmpty()}">
+    <h2 th:text="#{warehouses.title.empty}">No Warehouses</h2>
+</div>
+
+<div th:unless="${warehouses.isEmpty()}">
+    <h2 th:text="#{warehouses.title}">All Warehouses</h2>
+    <br/>
+    <br/>
+    <!--  search by country  -->
+    <form action="#" th:action="@{/warehouses}"
+          th:object="${filterByCountry}" method="post">
+        <label th:text="#{warehouses.by.country}"> Warehouses by country </label>
+        <br/>
+        <label>
+            <select th:field="*{countryName}">
+                <option th:each="country : ${countriesWithWarehouse}"
+                        th:value="${country.getCountryName()}"
+                        th:text="${country.getCountryName()}">
+                    Bulgaria
+                </option>
+            </select>
+            <input type="submit" value="Go">
+        </label>
+    </form>
+    <br/>
+    <br/>
+    <!--get by id-->
+    <script>
+        function process() {
+            location.href = "http://localhost:8080/warehouses/" + document.getElementById("id").value;
+            return false;
+        }
+    </script>
+
+    <form onSubmit="return process();">
+        <label for="id" th:text="#{get-by-id}"> Get by id</label>
+        <br/>
+        <input type="number" min=1 name="id" id="id">
+        <input type="submit" value="Go">
+    </form>
+
+
+    <!--   table of the Warehouses   -->
+    <table class="styled-table">
+        <thead>
+        <tr>
+            <th class=entityField th:text="#{warehouse.label.id}">Warehouse id</th>
+            <th class=entityField th:text="#{warehouse.label.city.id}">City Id</th>
+            <th class=entityField th:text="#{warehouse.label.city}">City</th>
+            <th class=entityField th:text="#{warehouse.label.country}">Country</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="warehouse : ${warehouses}">
+            <td>
+                <a th:align="center" href="#" th:href="@{/warehouses/{id}(id=${warehouse.getId()})}"
+                   th:text="${warehouse.getId()}">12</a>
+            </td>
+            <td th:text="${warehouse.getAddress().getCity().getId()}">18</td>
+            <td th:href="@{/cities/{id}(id = ${warehouse.getAddress().getCity().getId()})}"
+                th:text="${warehouse.getCityName()}">Sofia
+            </td>
+            <td th:text="${warehouse.getCountryName()}">Bulgaria</td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+
+</body>
+</html>

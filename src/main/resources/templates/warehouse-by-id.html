@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{warehouse.title} +' '+ ${warehouse.getId()}">Warehouse Id</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="../static/styles.css" th:href="@{/styles.css}" rel="stylesheet"/>
+    <link href="../static/styles.css" th:href="@{/styles.css}" rel="stylesheet"/>
+    <link href="../static/table-styles.css" th:href="@{/table-styles.css}" rel="stylesheet"/>
+</head>
+<body>
+<div th:insert="index :: navigation-main"></div>
+
+<ul>
+    <li><h3><a href="/" th:text="#{navigation.home}">Home</a></h3></li>
+    <li><h3><a href="#" th:href="@{/warehouses}"
+               th:text="#{navigation.all-warehouses}">Browse all warehouses</a></h3></li>
+
+    <li th:if="${session.role} == #{role.employee}">
+        <h3><a href="#" th:href="@{/warehouses/{id}/update (id=${warehouse.getId()})}"
+               th:text="#{warehouse-update.title}">Update warehouse</a></h3>
+    </li>
+</ul>
+
+<div th:fragment="warehouse-view">
+    <table class="styled-table">
+        <thead>
+        <tr>
+            <th class=entityField>Warehouse id</th>
+            <th class=entityField>City</th>
+            <th class=entityField>Country</th>
+            <th class=entityField>Address</th>
+            <th class=entityField>PostCode</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td th:text="${warehouse.getId}">12</td>
+            <td th:href="@{/cities/{id} (id = ${warehouse.getAddress().getCity().getId()})}"
+                th:text="${warehouse.getAddress().getCityName()}">Sofia
+            </td>
+            <td th:text="${warehouse.getCountryName()}">Bulgaria</td>
+            <td th:text="${warehouse.getAddress().getStreet1()} + ' ' +
+                     ${warehouse.getAddress().getStreet2()} ">San Stefano 29
+            </td>
+            <td th:text="${warehouse.getAddress().getPostCode()}">1000</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<br/>
+<br/>
+<li th:if="${session.role} == #{role.employee}">
+    <h5><a href="#"
+           th:href="@{/warehouses/{id}/delete (id=${warehouse.getId()})}"
+           th:text="#{warehouse-delete.title}">Delete warehouse</a>
+    </h5>
+</li>
+</body>
+</html>

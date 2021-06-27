@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Re uses</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="../static/styles.css" th:href="@{/styles.css}" rel="stylesheet"/>
+    <link href="../static/styles.css" th:href="@{/styles.css}" rel="stylesheet"/>
+
+</head>
+<body>
+<!--Warehouse selector-->
+<div th:fragment="warehouse-pick" >
+    <label th:text="#{parcel.label.warehouses}"> Warehouses </label>
+    <br/>
+    <label>
+        <select th:field="*{warehouseId}">
+            <option th:each="warehouse : ${warehouses}"
+                    th:value="${warehouse.getId()}"
+                    th:text="${warehouse.getCountryName()} +
+                                 #{separator} +
+                                 ${warehouse.getCityName()}">
+                Sofia Bulgaria
+            </option>
+        </select>
+        <label class="error" th:errors="*{warehouseId}"></label>
+    </label>
+</div>
+<!--Parcel Category Selector-->
+<div th:fragment="parcelCategory-pick">
+    <label th:text="#{parcel.label.category}"> Categories </label>
+    <br/>
+    <label>
+        <select th:field="*{parcelCategoryId}">
+            <option th:each="category : ${parcelCategories}"
+                    th:value="${category.getId()}"
+                    th:text="${category.getParcelCategory()}">
+                Food
+            </option>
+        </select>
+        <label class="error" th:errors="*{parcelCategoryId}"></label>
+    </label>
+</div>
+
+</body>
+</html>

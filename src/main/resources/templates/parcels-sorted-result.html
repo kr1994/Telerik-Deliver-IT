@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sorted Parcels</title>
+    <link href="../static/styles.css" th:href="@{/styles.css}" rel="stylesheet"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="../static/styles.css" th:href="@{/styles.css}" rel="stylesheet"/>
+    <link href="../static/table-styles.css" th:href="@{/table-styles.css}" rel="stylesheet"/>
+
+</head>
+<body>
+<div th:insert="index :: navigation-main"></div>
+
+<ul>
+    <li><h3><a href="/" th:text="#{navigation.home}">Home</a></h3></li>
+</ul>
+<div th:if="${sortingResult.isEmpty()}">
+    <h2 th:text="#{sorted-parcels.title.empty}">No parcels</h2>
+</div>
+
+<div th:unless="${sortingResult.isEmpty()}">
+    <h2 th:if="${sortingResult.size()>1}" th:text="#{sorted-parcels.title}">Parcels</h2>
+    <h2 th:unless="${sortingResult.size()>1}" th:text="#{sorted-parcels.title-single}">
+        Parcel info</h2>
+    <br/>
+    <br/>
+
+    <!--get by id-->
+    <script>
+        function process() {
+            location.href = "http://localhost:8080/parcels/" + document.getElementById("id").value;
+            return false;
+        }
+    </script>
+
+    <form onSubmit="return process();">
+        <label for="id" th:text="#{get-by-id}"> Get by id</label>
+        <br/>
+        <input type="number" min=1 name="id" id="id">
+        <input type="submit" value="Go">
+    </form>
+    <br/>
+    <!--  Info table   -->
+    <div th:fragment="parcelDtoOut-table">
+        <table class="styled-table">
+            <thead>
+            <tr>
+                <th class="entityField" th:text="#{parcel.label.id}">Parcel Id</th>
+                <th class="entityField" th:text="#{parcel.label.customer.id-name}">Customer Id</th>
+                <th class="entityField" th:text="#{user.label.firstName}">Customer name</th>
+                <th class="entityField" th:text="#{address.label.city-name}">City</th>
+                <th class="entityField" th:text="#{parcel.label.warehouse.id}">Parcel Destination</th>
+                <th class="entityField" th:text="#{parcel.label.category}">Parcel Category</th>
+                <th class="entityField" th:text="#{parcel.label.weight}">Weight</th>
+                <th class="entityField" th:text="#{parcel.label.weight-units}">Units</th>
+                <th class="entityField" th:text="#{shipment.label.id-name}">Shipment Id</th>
+                <th class="entityField" th:text="#{shipment.label.warehouse.id}">Shipment Destination</th>
+                <th class="entityField" th:text="#{shipment.label.arrival.date}">Arrival Date</th>
+                <th class="entityField" th:text="#{shipment.label.status}">Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="parcelDto : ${sortingResult}">
+                <td>
+                    <a href="#"
+                       th:href="@{/parcels/{id}(id=${parcelDto.getId()})}"
+                       th:text="${parcelDto.getId()}">77</a>
+                </td>
+                <td>
+                    <a href="#"
+                       th:href="@{/customers/{id}(id=${parcelDto.getCustomerId()})}"
+                       th:text="${parcelDto.getCustomerId()}">12</a>
+                </td>
+                <td th:text="${parcelDto.getCustomerName()}">Henry</td>
+                <td th:text="${parcelDto.getWarehouseCityName()}">Sofia</td>
+                <td>
+                    <a href="#"
+                       th:href="@{/warehouses/{id} (id = ${parcelDto.getParcelWarehouseId()})}"
+                       th:text="${parcelDto.getParcelWarehouseId()}">1</a>
+                </td>
+                <td th:text="${parcelDto.getCategoryName()}">Food</td>
+                <td th:text="${parcelDto.getWeight()}">4.5</td>
+                <td th:text="${parcelDto.getWeightUnits()}">gram</td>
+                <td>
+                    <a href="#" th:if="${session.role} == #{role.employee}"
+                       th:href="@{/shipments/{id} (id = ${parcelDto.getShipmentId()})}"
+                       th:text="${parcelDto.getShipmentId()}">2</a>
+                    <span th:unless="${session.role} == #{role.employee}"
+                          th:text="${parcelDto.getShipmentId()}">2</span>
+                </td>
+                <td>
+                    <a href="#"
+                       th:href="@{/warehouses/{id}(id=${parcelDto.getShipmentWarehouseId()})}"
+                       th:text="${parcelDto.getShipmentWarehouseId()}">4</a>
+                </td>
+                <td th:text="${parcelDto.getArrivalDate()}">2020-02-02</td>
+                <td th:text="${parcelDto.getShipmentStatus()}">Done</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{welcome.title}">Welcome to deliver IT</title>
+    <link href="../static/styles.css" th:href="@{/styles.css}" rel="stylesheet"/>
+
+</head>
+<body>
+<div class="welcome-message-container">
+    <text class="welcome-message"> Welcome to Deliver IT </text>
+    <br>
+    <text class="customers-number" th:text="#{number-of-customers.label} +' '+ ${numberOfCustomers}"> Number of Customers 124 </text>
+</div>
+
+<div class="welcome-button-container">
+    <div class="pos-button">
+        <a href="#" class="link-button" th:href="@{/login}" th:value="#{navigation.login}"> Login </a>
+    </div>
+
+    <div class="pos-button">
+        <a href="#" class="link-button" th:href="@{/new}" th:value="#{navigation.register}"> Register </a>
+    </div>
+
+    <div class="pos-button">
+        <a href="#" class="link-button" th:href="@{/warehouses/}" th:value="#{navigation.all-warehouses}"> Warehouses </a>
+    </div>
+
+</div>
+
+</body>
+</html>

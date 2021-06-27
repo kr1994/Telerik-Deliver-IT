@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{employee-by-id.title} +' '+ ${employee.getId()}">Employee Id 11</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="../static/styles.css" th:href="@{/styles.css}" rel="stylesheet"/>
+    <link href="../static/styles.css" th:href="@{/styles.css}" rel="stylesheet"/>
+</head>
+<body>
+<div th:insert="index :: navigation-main"></div>
+
+<ul>
+    <li><h3><a href="/" th:text="#{navigation.home}">Home</a></h3></li>
+    <li><h3>
+        <a href="#"
+           th:href="@{/employees/new}"
+           th:text="#{navigation.employees-create}">New Employee</a>
+    </h3></li>
+    <li><h3>
+        <a href="#"
+           th:href="@{/employees/{id}/update (id = ${employee.getId()})}"
+           th:text="#{navigation.employees-update}">Update Employee</a>
+    </h3></li>
+</ul>
+<div th:fragment="employee-view"
+     th:action="@{__${#httpServletRequest.requestURI}__}">
+
+    <h3>
+        <span class=entityField> Employee id: </span>
+        <span th:text="${employee.getId()}">1</span>
+    </h3>
+
+    <div>
+        <span class=entityField> Employee First name: </span>
+        <span th:text="${employee.getFirstName()}">Pesho</span>
+    </div>
+    <div>
+        <span class=entityField> Employee Last name: </span>
+        <span th:text="${employee.getLastName()}">Botev</span>
+    </div>
+    <div>
+        <span class=entityField> Employee email:</span>
+        <span th:text="${employee.getEmail()}">abvcde@gmail.com</span>
+    </div>
+</div>
+
+<li><h5>
+    <a href="#"
+       th:href="@{/employees/{id}/delete(id = ${employee.getId()})}"
+       th:text="#{navigation.employees-delete}">Delete</a>
+</h5></li>
+</body>
+</html>

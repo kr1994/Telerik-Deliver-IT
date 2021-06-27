@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{parcel-create.title}">Create Parcel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="../static/styles.css" th:href="@{/styles.css}" rel="stylesheet"/>
+    <link href="../static/styles.css" th:href="@{/styles.css}" rel="stylesheet"/>
+
+</head>
+<body>
+<div th:insert="index :: navigation-main"> </div>
+
+<ul>
+    <li><h3><a href="/" th:text="#{navigation.home}">Home</a></h3></li>
+</ul>
+<div>
+    <h3>
+        <span th:text="#{parcel-create.header}">Shipment view:</span>
+    </h3>
+    <form action="#" th:action="@{__${#httpServletRequest.requestURI}__}"
+          th:fragment="parcel-form"
+          th:object="${parcel}" method="post">
+
+        <!--Customer id set-->
+        <div>
+            <label th:text="#{parcel.label.customer.id}"> Customer Id</label>
+            <br/>
+            <label>
+                <input type="number" th:min="1" th:step="1" th:value="3"
+                       th:field="*{customerId}" required/>
+                <label class="error" th:errors="*{customerId}"></label>
+            </label>
+        </div>
+        <br/>
+        <!--Weight value-->
+        <div>
+            <label th:text="#{parcel.label.weight}"> Weight Value</label>
+            <br/>
+            <label>
+                <input type="number" th:min="0.001" th:step="0.001" th:value="1"
+                       th:field="*{weight}" required/>
+                <label class="error" th:errors="*{weight}"></label>
+            </label>
+        </div>
+        <br/>
+        <!-- Weight unit pick -->
+        <div>
+            <label th:text="#{parcel.label.weight-units}"> Units </label>
+            <br/>
+            <label>
+                <select th:field="*{weightUnitsId}">
+                    <option th:each="unit : ${weightUnits}"
+                            th:value="${unit.getId()}"
+                            th:text="${unit.getUnits()}">
+                        gram
+                    </option>
+                </select>
+                <label class="error" th:errors="*{weightUnitsId}"></label>
+            </label>
+        </div>
+        <br/>
+        <!--Category pick-->
+        <div th:object="${parcel}"
+             th:replace="_reusables.html :: parcelCategory-pick">
+                Pick a Category from re use
+        </div>
+        <br/>
+        <!--Warehouse pick-->
+        <div th:object="${parcel}"
+             th:replace="_reusables.html :: warehouse-pick"> pick warehouse form re use
+        </div>
+        <br/>
+        <!--Shipment Id-->
+        <div>
+            <label th:text="#{parcel.label.shipment.id}"> Shipment Id</label>
+            <br/>
+            <label>
+                <input type="number" th:min="1" th:step="1" th:value="1"
+                       th:field="*{shipmentId}" required/>
+                <label class="error" th:errors="*{shipmentId}"></label>
+            </label>
+        </div>
+        <br/>
+        <input type="submit" value="Save">
+    </form>
+</div>
+</body>
+</html>

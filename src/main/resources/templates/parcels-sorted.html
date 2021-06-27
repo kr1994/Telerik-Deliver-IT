@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{parcel-sorting.title}">Parcels Sorting parameters:</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="../static/styles.css" th:href="@{/styles.css}" rel="stylesheet"/>
+    <link href="../static/styles.css" th:href="@{/styles.css}" rel="stylesheet"/>
+</head>
+<body>
+<div th:insert="index :: navigation-main"> </div>
+
+<ul>
+    <li><h3><a href="/" th:text="#{navigation.home}">Home</a></h3></li>
+</ul>
+<form action="#" th:action="@{__${#httpServletRequest.requestURI}__}"
+      th:fragment="parcelSorting-form"
+      th:object="${parcelSortingDto}" method="post">
+    <!--customerId-->
+    <div th:if="${isCustomer} == null">
+        <label th:text="#{parcel.label.customer.id}"> Customer Id</label>
+        <br/>
+        <label>
+            <input type="number" th:step=1 th:min="0"
+                   th:field="*{customerId}"/>
+            <label class="error" th:errors="*{customerId}"></label>
+        </label>
+    </div>
+    <br/>
+    <!--double weight-->
+    <div>
+        <label th:text="#{parcel.label.weight}"> Weight Value</label>
+        <br/>
+        <label>
+            <input type="number" th:step="0.001" th:min="0"
+                   th:field="*{weight}"/>
+            <label class="error" th:errors="*{weight}"></label>
+        </label>
+        <label>
+            <select th:field="*{weightUnit}">
+                <option th:each="unit : ${weightUnits}"
+                        th:value="${unit.getUnits()}"
+                        th:text="${unit.getUnits()}">
+                    gram
+                </option>
+            </select>
+            <label class="error" th:errors="*{weightUnit}"></label>
+        </label>
+
+    </div>
+    <br/>
+
+    <!--Warehouse pick-->
+    <div th:object="${parcelSortingDto}"
+         th:replace="_reusables.html :: warehouse-pick"> pick warehouse form re use
+    </div>
+    <br/>
+    <!--categoryId -->
+    <div th:object="${parcelSortingDto}"
+         th:replace="_reusables.html :: parcelCategory-pick"> pick Parcel Category from re use
+    </div>
+    <br/>
+    <!--String weightSort-->
+    <div>
+        <label th:text="#{parcel-sort-dto.label.sorting-by-weight}"> Sorting by weight: </label>
+        <br/>
+        <label>
+            <select th:field="*{weightSort}" required>
+                <option th:each="sorting : ${sortingTypes}"
+                        th:value="${sorting}"
+                        th:text="${sorting}">
+                    ASC
+                </option>
+            </select>
+            <label class="error" th:errors="*{weightSort}"></label>
+        </label>
+    </div>
+    <br/>
+    <!--String arrivalDateSort-->
+    <div>
+        <label th:text="#{parcel-sort-dto.label.sorting-by-arrival-date}"> Sorting by Arrival date: </label>
+        <br/>
+        <label>
+            <select th:field="*{arrivalDateSort}" required>
+                <option th:each="sorting : ${sortingTypes}"
+                        th:value="${sorting}"
+                        th:text="${sorting}">
+                    ASC
+                </option>
+            </select>
+            <label class="error" th:errors="*{arrivalDateSort}"></label>
+        </label>
+    </div>
+    <br/>
+    <input type="submit" value="Go">
+</form>
+
+</body>
+</html>
